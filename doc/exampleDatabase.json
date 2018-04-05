@@ -1,0 +1,39 @@
+﻿{
+    "runs" : [
+        {
+            "path" : "/myDatabase1",
+            "position": [0,0,0],
+            "size" : 75,
+            "alphaColor" : [1.0,1.0,1.0],
+            "alphaThreshold" : 1.5,
+            "alphaSoftness" : 1.0,
+            "invertTheta" : true,
+            "thetaAlignment" : -90,
+            "minTheta" : 0,
+            "maxTheta" : 90
+
+        },
+        {
+            "path" : "http://mywebsite.net/myOnlineDatabase",
+            "online" : true,
+            "position" : [-10,-5,-10],
+            "size" : 100,
+            "alphaColor" : [1.0,1.0,1.0],
+            "alphaThreshold" : 1.0,
+            "alphaSoftness" : 0.5
+        },
+        {
+            "path" : "/myDatabase2",
+            "position" : [10,0,10],
+            "size" : 150,
+            "alphaColor" : [1.0,1.0,1.0],
+            "alphaThreshold" : 1.0,
+        }
+    ],
+    "metadata" : {
+        "maxBounds" : [30,20,30],
+        "minBounds" : [-30,-20,-30],
+        "maxCacheSize" : 200,
+        "scale" : 1
+    }
+}

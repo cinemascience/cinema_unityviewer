@@ -1,0 +1,140 @@
+﻿
+<html>
+	<head>
+		<title>Cinema Unity Viewer Documentation</title>
+	</head>
+	<body>
+		<h1>Meta Database Specification v1.4.3</h1>
+		<h2>Overview</h2>
+		<p>
+			The Cinema Unity Viewer allows for viewing multiple spec-A Cinema databases at the 
+			same time in a single 3D space. To do this, the Unity Viewer requires a specially 
+			formatted json file, called a meta database, describing which databases are to 
+			be used and how they are to be arranged in the 3D space. This document describes 
+			the formatting of the meta database file and the function of the various properties 
+			that can be defined in it.
+			<br>
+			<b>Note: </b>While it is possible to load a single database into the Unity Viewer 
+			directly from its info.json file, for viewing a single database, it is recommended 
+			to create a meta database containing only the single database as it will allow 
+			for using some of the special properties which may be necessary for the 
+			database to display correctly.
+			<br><br>
+			An example of a meta database file can be found <a href="exampleDatabase.json">here</a>.
+			<br>
+			A complete json schema for the meta database can be found <a href="schema.json">here</a>.
+		</p>
+		<h2>Properties</h2>
+			<h3>Root</h3>
+				<b>metadata:</b> An object containing properties outside of a specific 
+				database (e.g. The boundaries of the viewing area). See "metadata" for more 
+				information.
+				<br>
+				<b>runs:</b> An array of objects representing the databases to be used. 
+				See "databases" for more information.
+			<h3>metadata</h3>
+				<b>minBounds:</b> An array of three numbers representing the smallest 
+				values on the x, y, and z axes, respectively, that the camera can move to. 
+				In the viewer, walls will appear to block the user as the camera approaches 
+				these values.
+				<br>
+				<b>maxBounds:</b> An array of three numbers representing the largest 
+				values on the x, y, and z axes, respectively, that the camera can move to. 
+				It is recommended to leave a space of at least ten units around the 
+				outermost databases before the boundaries so that the user will have room to 
+				easily navigate around them.
+				<br>
+				<b>maxCacheSize:</b> The maximum number of images each database can 
+				store in its cache. The higher this is, the better the performance, but the 
+				greater the memory cost.
+				<br>
+				<b>scale:</b> <i>(optional)</i> Multiplies the positions of all 
+				runs by this amount. This will <i>not</i> affect the positions of the 
+				boundaries defined in minBounds and maxBounds.
+			<h3>runs</h3>
+				Any of the properties here can also be placed under "metadata" to act as a default.
+				All runs will use the value in "metadata" unless overriden here.
+				<br><br>
+				<b>path:</b> The path (relative to the meta database file, unless it 
+				is an online URL) to the directory containing the database. The database's 
+				info.json file must be in this directory. <b>NOTE:</b> It may be necessary to
+				alter the direction of the slash in the path according to your system.
+				<br>
+				<b>position:</b> An array of three numbers representing the position 
+				on the x, y, and z axes, respectively where the databases should be in 
+				the 3D space. For reference, the camera begins at [0,0,-5] facing 
+				the positive Z axis.
+				<br>
+				<b>size:</b> The size (in pixels per Unity unit) at which the 
+				images of the database will be displayed. A smaller value will make 
+				the database appear larger.
+				<br>
+				<b>online:</b> <i>(optional)</i> Whether or not the given path 
+				is an online URL.
+				<br>
+				<b>alphaColor:</b> <i>(optional)</i> An array of three numbers 
+				representing the rgb values of the background color to be removed from 
+				the image. Rgb values are floats ranging from 0 to 1.0.
+				<br>
+				<b>alphaThreshold:</b> <i>(optional)</i> The threshold around 
+				the alphaColor for removing the background color. A value of 0 means that 
+				only pixels exactly matching the alphaColor will be removed. A higher value 
+				will remove more similar colors.
+				<br>
+				<b>alphaSoftness:</b> <i>(optional)</i> Allows for some softness 
+				on removing the background. The greater the value, 
+				the more colors around the threshold will be given a partial alpha value.
+		<h2>Realigning and Rescaling Phi and Theta Values</h2>
+			Because different Cinema databases have different ways of interpreting the 
+			phi and theta values representing the angles at which the database can be viewed, 
+			a number of other properties may be needed to re-interpret these 
+			values so that all databases behave properly when put into the 3D space. 
+			The properties invertPhi, invertTheta, phiAlignment, thetaAlignment, 
+			minPhi, maxPhi, minTheta and maxTheta are used to do this. 
+			It is easiest to think to of this process as a pipeline beginning with 
+			the phi and theta values of the database in Unity world space. These values are 
+			adjusted and, at the end, are matched to the closest values in the ‘phi’ and 
+			‘theta’ arguments of the Cinema database to determine which image to display. 
+			The steps of that pipeline are outlined below. Like the properties under "runs",
+			these values can also be set under "metadata" to act as a default.
+			<h3>Beginning</h3>
+				At first, the phi and theta variables represent the rotation of the database 
+				in Unity world space necessary to face directly at the camera. Phi, 
+				the horizontal rotation, starts with 0° facing down the negative Z axis and 
+				rotates clockwise up to 360°. Theta, the vertical rotation starts with 0° 
+				facing directly downwards (negative Y axis) and 180° facing directly upwards 
+				(positive Y axis). For reference, a database placed at [0,0,0] will start 
+				with a phi of 0° and theta of 90° as it is directly in front of the camera 
+				which starts at [0,0,-5].
+			<h3>Inverting Phi/Theta</h3>
+				If you find that a database seems to rotate in the wrong direction when moving 
+				the camera around it, you may want to invert either the phi or theta values. 
+				Setting invertPhi to ‘true’ in the json file will cause the phi value to 
+				rotate counter-clockwise instead. For example, a value of 315° will 
+				change to 45° when inverted. Likewise, theta will be inverted so that 0° 
+				is straight up and 180° is straight down.
+			<h3>Phi and Theta Alignment</h3>
+				The phiAlignment and thetaAlignment values are added to the phi and theta 
+				values respectively. (Both also have a modulo 360, so values above 360° 
+				will automatically wrap around). This can be used to effectively rotate 
+				an entire database by some amount.
+			<b>Note:</b> These values are applied after invertPhi and invertTheta, 
+			so a phiAlignment with a value of 90 will rotate in the opposite direction if 
+			invertPhi is also true.
+			<h3>Rescaling Phi and Theta</h3>
+				Sometimes a Cinema database will have phi or theta values that are scaled 
+				incorrectly (for example, phi changing by 60° shows a rotation of only 30°). 
+				The minPhi, maxPhi, minTheta and maxTheta values can be used to correct scaling 
+				problems.  minPhi and minTheta define the Unity world space 
+				(after inverting and alignment) equivalents of the first value listed in the 
+				database’s phi and theta arguments respectively. Likewise, maxPhi and maxTheta 
+				represent the equivalents of the last value listed in the database’s phi and theta 
+				arguments. The phi and theta values are then interpolated linearly between 
+				these values to ensure they align with what is defined in the database’s arguments.
+			<h3>End</h3>
+				After the phi and theta values have been inverted, re-aligned and/or rescaled, 
+				they are matched to the nearest values defined in the database’s phi and 
+				theta arguments. It is these values that are used to determine which image 
+				should be displayed.
+	</body>
+</html>

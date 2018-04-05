@@ -1,0 +1,63 @@
+﻿
+<html>
+	<head>
+		<title>Cinema Unity Viewer Documentation</title>
+	</head>
+	<body>
+		<h1>Running the Viewer</h1>
+		<p>
+			Run the appropriate file for your OS
+			<ul>
+				<li>For Mac, run CinemaUnityViewer.app. The .app file is 
+				standalone. No other files are needed to run it</li>
+				<li>For Windows, run CinemaUnityViewer.exe 
+				(You will also need the data directory to go with it).</li>
+			</ul>
+		</p>
+		<h2>Loading a Database</h2>
+		<img src="images/screenshot1.png" width=450>
+		<p>
+			Open the meta database file you wish to view by either entering the 
+			path into the text field or using the browse button.
+			<br>
+			If you wish to view a single database, check the
+			<i>Single Database</i> box and open the database's info.json file
+			<br>
+			For more information on creating a meta database file, please see
+			the <a href="specification.html">Meta Database Specification</a>
+			guide. If you just want to test the viewer, try opening the
+			sample data.
+		</p>
+		<h2>Viewing a Database</h2>
+		<img src="images/controls.png" width=900>
+		<p>
+			Use the <i>WASD</i> keys to move horizontally, and the <i>QE</i> keys
+			to move vertically. Use the mouse to look around.
+			<br>
+			Left-click to open the menus to adjust variables and view information
+			about each database. Right-click to close them again.
+			<br>
+			Check the <i>Orbit This</i> box on a database to lock the controls into
+			an orbit around that database. Use <i>WASD</i> to orbit and <i>Q/E</i>
+			to zoom in or out.
+		</p>
+		<img src="images/screenshot2.png" width=450>
+		<h2>Saving and Loading Camera Positions</h2>
+		<p>
+			To save camera angles and positions to view later, first press the
+			<i>Camera Options</i> button on the main menu and enter the name of
+			the file you would like the positions to be saved to in the box. The
+			file must end in '.ca'. While viewing the database, any of the <i>F1</i> to <i>F10</i>
+			keys to record the current camera position and angle to the corresponding slot.
+			Press <i>Enter</i> to write all recorded positions to the file.
+			<br>
+			To load and view previously saved camera angles, open the <i>Camera Options</i> menu
+			again and enter the path of the save file into the text field or use the browse button.
+			If you would like the camera to animate when moving to saved positions, use the slider to adjust
+			how long you want the animation to take. When viewing the database, press any of
+			the <i>1</i> to <i>10</i> keys to move the camera to the position saved in the corresponding
+			slot. 
+		</p>
+		<img src="images/screenshot3.png" width=450>
+	</body>
+</html>

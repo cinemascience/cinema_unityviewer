@@ -1,0 +1,72 @@
+﻿{
+    "$schema" : "http://json-schema.org/schema#",
+    
+    "type" : "object",
+    "properties" : {
+        "runs" : {
+            "type" : "array",
+            "items" : { "$ref" : "#/definitions/run" }
+        },
+        "metadata" : {
+            "type" : "object",
+            "properties" : {
+                "maxBounds" : { "$ref" : "#/definitions/position" },
+                "minBounds" : { "$ref" : "#/definitions/position" },
+                "maxCacheSize" : { "type" : "number", "minimum" : 0 },
+                "scale" : { "type" : "number" },
+				"path" : { "type" : "string", },
+                "online" : { "type" : "boolean" },
+                "position" : { "$ref" : "#/definitions/position" },
+                "size" : { "type" : "number", "minimum" : 0, "exclusiveMinimum" : true },
+                "alphaColor" : { "$ref" : "#/definitions/color" },
+                "alphaThreshold" : { "type" : "number", "minimum" : 0 },
+                "alphaSoftness" : { "type" : "number", "minimum" : 0 },
+                "invertPhi" : { "type" : "boolean" },
+                "invertTheta" : { "type" : "boolean" },
+                "phiAlignment" : { "type" : "number" },
+                "thetaAlignment" : {"type" : "number" },
+                "minPhi" : { "type" : "number" },
+                "maxPhi" : { "type" : "number" },
+                "minTheta" : { "type" : "number" },
+                "maxTheta" : { "type" : "number" }
+            },
+            "required" : ["maxBounds", "minBounds", "maxCacheSize"]
+        }
+    },
+    "required" : ["runs","metadata"],
+    
+    "definitions" : {
+        "color" : {
+            "type" : "array",
+            "items" : { "type" : "number", "minimum" : 0, "maximum" : 1 },
+            "minItems" : 3,
+            "maxItems" : 3
+        },
+        "position" : {
+            "type" : "array",
+            "items" : { "type" : "number" },
+            "minItems" : 3,
+            "maxItems" : 3
+        },
+        "run" : {
+            "type" : "object",
+            "properties" : {
+                "path" : { "type" : "string", },
+                "online" : { "type" : "boolean" },
+                "position" : { "$ref" : "#/definitions/position" },
+                "size" : { "type" : "number", "minimum" : 0, "exclusiveMinimum" : true },
+                "alphaColor" : { "$ref" : "#/definitions/color" },
+                "alphaThreshold" : { "type" : "number", "minimum" : 0 },
+                "alphaSoftness" : { "type" : "number", "minimum" : 0 },
+                "invertPhi" : { "type" : "boolean" },
+                "invertTheta" : { "type" : "boolean" },
+                "phiAlignment" : { "type" : "number" },
+                "thetaAlignment" : {"type" : "number" },
+                "minPhi" : { "type" : "number" },
+                "maxPhi" : { "type" : "number" },
+                "minTheta" : { "type" : "number" },
+                "maxTheta" : { "type" : "number" }
+            }
+        }
+    }
+}
