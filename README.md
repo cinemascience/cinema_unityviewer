@@ -1,4 +1,4 @@
-![Alt text](https://gitlab.lanl.gov/camerontauxe/cinema-unity-viewer/raw/master/doc/images/cinema_logo.png)
+![Alt text](https://github.com/cinemascience/cinema_unityviewer/blob/master/doc/images/cinema_logo.png)
 
 # Unity Viewer for Cinema multicamera databases
 
